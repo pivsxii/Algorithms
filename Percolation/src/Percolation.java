@@ -3,23 +3,34 @@ public class Percolation
    private boolean[][] schemaOpen = null;
    private int dimension = 0;
    private WeightedQuickUnionUF test = null;
+   private WeightedQuickUnionUF testFull = null; // To avoid backwash
+   private int virtualTopPosition = 0;
+   private int virtualBottomPosition = 0;
 
    // create N-by-N grid, with all sites blocked
    public Percolation(int N)
    {
       dimension = N;
       schemaOpen = new boolean[N][N];
-      test = new WeightedQuickUnionUF(N * N);
+      test = new WeightedQuickUnionUF(N * N + 2); // 2 for the 2 virtual sites
+      testFull = new WeightedQuickUnionUF(N * N + 1); // 1 for only top Virtual site
+      virtualTopPosition = test.count() - 2;
+      virtualBottomPosition = test.count() - 1;
 
       for (int i = 0; i < N; i++)
          for (int j = 0; j < N; j++)
             schemaOpen[i][j] = false;
+      
+//      for (int a = 0; a < dimension; a++)
+//      {
+//         test.union(virtualTopPosition, a);
+//         test.union(virtualBottomPosition, a + (dimension * (dimension - 1)));
+//      }
    }
 
    // open site (row i, column j) if it is not already
    public void open(int i, int j)
    {
-      checkIndex(i, j);
       int x = i - 1;
       int y = j - 1;
       int elem = x * dimension + y;
@@ -29,22 +40,44 @@ public class Percolation
       // Check the left cell
       if (y != 0)
          if (isOpen(i, j - 1))
+         {
             test.union(elem, elem - 1);
+            testFull.union(elem, elem - 1);
+         }
 
       // Check the right cell
       if (y != dimension - 1)
          if (isOpen(i, j + 1))
+         {
             test.union(elem, elem + 1);
+            testFull.union(elem, elem + 1);
+         }
 
       // Check the upper cell
       if (x != 0)
          if (isOpen(i - 1, j))
+         {
             test.union(elem, elem - dimension);
+            testFull.union(elem, elem - dimension);
+         }
 
       // Check the lower cell
       if (x != dimension - 1)
          if (isOpen(i + 1, j))
+         {
             test.union(elem, elem + dimension);
+            testFull.union(elem, elem + dimension);
+         }
+      
+      if (x == 0)
+      {
+         test.union(virtualTopPosition, elem);
+         testFull.union(virtualTopPosition, elem);
+      }
+      if (x == dimension - 1)
+         test.union(virtualBottomPosition, elem);
+      
+      this.isFull(i, j);
    }
 
    // is site (row i, column j) open?
@@ -64,20 +97,11 @@ public class Percolation
       
       if (isOpen(i, j))
       {
-         //The elements in the first row are always full if thery're open 
-         if (x == 0)
-            return true;
-         
          int p = x * dimension + y;
-         int elemValue = test.find(p);
-         for (int a = 0; a < dimension; a++)
-         {
-            if (isOpen(1, a + 1) && this.test.find(a) == elemValue)
-               return true;
-         }
+         return this.testFull.connected(p, virtualTopPosition);
       }
-
-      return false;
+      else
+         return false;
    }
 
    private void checkIndex(int i, int j)
@@ -91,10 +115,6 @@ public class Percolation
    // does the system percolate?
    public boolean percolates()
    {
-      for (int i = 1; i <= dimension; i++)
-         if (isFull(dimension, i))
-            return true;
-
-      return false;
+      return this.test.connected(virtualBottomPosition, virtualTopPosition);
    }
 }

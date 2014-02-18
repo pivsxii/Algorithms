@@ -121,7 +121,8 @@ public class PercolationStats
       try
       {
          d = Integer.parseInt(str);
-      } catch (NumberFormatException nfe)
+      }
+      catch (NumberFormatException nfe)
       {
          throw new IllegalArgumentException("The " + field + " is invalid");
       }
