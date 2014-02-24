@@ -1,3 +1,11 @@
+/*************************************************************************
+* Name: Paolo Re
+*
+* Description: The PercolationStats class
+* Algorithms, Part I - Week 1
+*
+*************************************************************************/
+
 public class PercolationStats
 {
    private double[] experimentsValue;

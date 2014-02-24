@@ -1,3 +1,11 @@
+/*************************************************************************
+* Name: Paolo Re
+*
+* Description: The Percolation class
+* Algorithms, Part I - Week 1
+*
+*************************************************************************/
+
 public class Percolation
 {
    private boolean[][] schemaOpen = null;
