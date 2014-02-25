@@ -12,6 +12,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>
 {
    private Item[] array = null;
    private int numElem = 0;
+   private int n;
    
    private class RandomizedQueueIterator implements Iterator<Item>
    {
@@ -80,17 +81,18 @@ public class RandomizedQueue<Item> implements Iterable<Item>
       if (item == null)
          throw new NullPointerException();
       
-      if (numElem == array.length)
-         resize(numElem * 2);
+      if (n == array.length)
+         resize(n * 2);
       
-      array[numElem] = item;
+      array[n] = item;
       numElem++;
+      n++;
    }
    
    private void resize(int newDimension)
    {
       Item[] newArray = (Item[]) new Object[newDimension];
-      int n = 0;
+      n = 0;
       
       for (int i = 0; i < array.length; i++)
       {
@@ -123,10 +125,10 @@ public class RandomizedQueue<Item> implements Iterable<Item>
       if (isEmpty())
          throw new NoSuchElementException();
       
-      int randomNumber = StdRandom.uniform(array.length);
+      int randomNumber = StdRandom.uniform(n);
       
       while (array[randomNumber] == null)
-         randomNumber = StdRandom.uniform(array.length);
+         randomNumber = StdRandom.uniform(n);
       
       return randomNumber;
    }
@@ -134,9 +136,6 @@ public class RandomizedQueue<Item> implements Iterable<Item>
    // return (but do not delete) a random item
    public Item sample()
    {
-      if (isEmpty())
-         throw new NoSuchElementException();
-      
       return array[getRandomElement()];
    }
    
@@ -151,7 +150,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>
    {
       RandomizedQueue<String> prova = new RandomizedQueue<String>();
       
-      for (int i = 0; i <= 50; i++)
+      for (int i = 0; i <= 10000; i++)
       {
          int n = StdRandom.uniform(10);
          
@@ -160,11 +159,5 @@ public class RandomizedQueue<Item> implements Iterable<Item>
          else
             prova.enqueue("Prova" + i);
       }
-
-//      
-//      StdOut.println("Prova con Iteratori");
-//      Iterator<String> iter = prova.iterator();
-//      while (iter.hasNext())
-//         StdOut.println(iter.next());
    }
 }
