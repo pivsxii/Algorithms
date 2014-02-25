@@ -59,7 +59,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>
    // construct an empty randomized queue
    public RandomizedQueue()
    {
-      this.array = (Item[]) new Object[10];
+      this.array = (Item[]) new Object[1];
    }
    
    // is the queue empty?
@@ -96,6 +96,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>
       {
          if (array[i] == null)
             continue;
+         
          newArray[n++] = array[i];
       }
       
@@ -149,54 +150,16 @@ public class RandomizedQueue<Item> implements Iterable<Item>
    public static void main(String[] args)
    {
       RandomizedQueue<String> prova = new RandomizedQueue<String>();
-      prova.enqueue("AA");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("CC");
-      prova.enqueue("CC");
       
-      prova.dequeue();
-      prova.enqueue("AA");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("CC");
-      prova.enqueue("CC");
-      prova.dequeue();
-      prova.enqueue("AA");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("CC");
-      prova.enqueue("CC");
-      prova.dequeue();
-      prova.enqueue("AA");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("CC");
-      prova.enqueue("CC");
-      prova.dequeue();
-      prova.enqueue("AA");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("BB");
-      prova.enqueue("CC");
-      prova.enqueue("CC");
-      
-     
-      
+      for (int i = 0; i <= 50; i++)
+      {
+         int n = StdRandom.uniform(10);
+         
+         if (n == 0)
+            prova.dequeue();
+         else
+            prova.enqueue("Prova" + i);
+      }
 
 //      
 //      StdOut.println("Prova con Iteratori");
