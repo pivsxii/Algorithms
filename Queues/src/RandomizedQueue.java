@@ -158,19 +158,46 @@ public class RandomizedQueue<Item> implements Iterable<Item>
       prova.enqueue("CC");
       prova.enqueue("CC");
       
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
-      StdOut.println(prova.dequeue());
+      prova.dequeue();
+      prova.enqueue("AA");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("CC");
+      prova.enqueue("CC");
+      prova.dequeue();
+      prova.enqueue("AA");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("CC");
+      prova.enqueue("CC");
+      prova.dequeue();
+      prova.enqueue("AA");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("CC");
+      prova.enqueue("CC");
+      prova.dequeue();
+      prova.enqueue("AA");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("BB");
+      prova.enqueue("CC");
+      prova.enqueue("CC");
+      
+     
+      
+
 //      
 //      StdOut.println("Prova con Iteratori");
 //      Iterator<String> iter = prova.iterator();
