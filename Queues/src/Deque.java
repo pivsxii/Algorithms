@@ -76,7 +76,7 @@ public class Deque<Item> implements Iterable<Item>
    // return the number of items on the deque
    public int size() 
    {
-      return 0;
+      return size;
    }
    
    // insert the item at the front
@@ -85,10 +85,14 @@ public class Deque<Item> implements Iterable<Item>
       if (item == null)
          throw new NullPointerException();
       
-      Node<Item> elem = new Node<Item>(null,first, item);
+      Node<Item> elem = new Node<Item>(null, first, item);
+      
+      if (first != null)
+         first.previous = elem;
+      
       first = elem;
       
-      if (size == 0)
+      if (isEmpty())
          last = first;
       
       size++;
@@ -97,12 +101,18 @@ public class Deque<Item> implements Iterable<Item>
    // insert the item at the end
    public void addLast(Item item)
    {
+      if (item == null)
+         throw new NullPointerException();
+      
       Node<Item> elem = new Node<Item>(last, null, item);
-      last.next = elem;
+      
+      if (last != null)
+         last.next = elem;
+         
       last = elem;
       
       if (size == 0)
-         last = first;
+         first = last;
       
       size++;
    }
@@ -110,14 +120,18 @@ public class Deque<Item> implements Iterable<Item>
    // delete and return the item at the front
    public Item removeFirst()
    {
-      if (!isEmpty())
+      if (isEmpty())
          throw new NoSuchElementException();
       
       Node<Item> temp = first;
       first = temp.next;
-      first.previous = null;
       
       size--;
+      
+      if (first != null)
+         first.previous = null;
+      else
+         last = null;
       
       return temp.item;
    }
@@ -125,14 +139,18 @@ public class Deque<Item> implements Iterable<Item>
    // delete and return the item at the end
    public Item removeLast()
    {
-      if (!isEmpty())
+      if (isEmpty())
          throw new NoSuchElementException();
       
       Node<Item> temp = last;
       last = temp.previous;
-      last.next = null;
       
       size--;
+      
+      if (last != null)
+         last.next = null;
+      else
+         first = null;
       
       return temp.item;
    }
@@ -149,7 +167,10 @@ public class Deque<Item> implements Iterable<Item>
       Deque<String> prova = new Deque<String>();
       prova.addFirst("pippo");
       prova.addFirst("pluto");
-      prova.addLast("Minni");
+      prova.addFirst("Minni");
+      prova.removeLast();
+      prova.removeLast();
+      prova.removeLast();
       
       for (String string : prova)
       {
