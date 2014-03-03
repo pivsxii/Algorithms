@@ -16,7 +16,8 @@ public class Fast
    public static void main(String[] args)
    {
       int numberOfPoints = 0;
-      final int CUTOFF_ELEMENT = 4;
+      final int CUTOFF_ELEMENT = 3;
+      List<Point> sameSlopeArray = new ArrayList<Point>();
 
       if (args != null)
       {
@@ -40,20 +41,22 @@ public class Fast
          for (int i = 0; i < numberOfPoints; i++)
          {
             Arrays.sort(array, originalArray[i].SLOPE_ORDER);
-            List<Point> sameSlopeArray = new ArrayList<Point>();
-            boolean newSlopeToCheck = false;
             
-            for (int j = 0; j < numberOfPoints; j++)
+            sameSlopeArray.clear();
+            boolean newSlopeToCheck = true;
+            double slopeToCheck = 0;
+            
+            for (int j = 1; j < numberOfPoints; j++)
             {
-               if (j == 0)
+               if (newSlopeToCheck)
                {
-                  sameSlopeArray.clear();
+                  slopeToCheck = originalArray[i].slopeTo(array[j]);
                   sameSlopeArray.add(array[j]);
-                  newSlopeToCheck = true;
+                  newSlopeToCheck = false;
                   continue;
                }
-               
-               if (newSlopeToCheck || array[j].slopeTo(originalArray[i]) == array[j - 1].slopeTo(originalArray[i]))
+                  
+               if (originalArray[i].slopeTo(array[j]) == slopeToCheck)
                {
                   sameSlopeArray.add(array[j]);
                   newSlopeToCheck = false;
@@ -61,29 +64,37 @@ public class Fast
                }
                
                if (sameSlopeArray.size() >= CUTOFF_ELEMENT)
-               {
-                  // I have 4+ Points with the same slope
-                  Collections.sort(sameSlopeArray);
-                  
-                  // Print result only one time for tuple
-                  if (sameSlopeArray.get(0).compareTo(originalArray[i]) == 0)
-                  {
-                     for (int k = 0; k < sameSlopeArray.size(); k ++)
-                     {
-                        if (k < sameSlopeArray.size() - 1)
-                           StdOut.print(sameSlopeArray.get(k).toString() + " -> ");
-                        else
-                           StdOut.println(sameSlopeArray.get(k).toString());
-                     }
-                     sameSlopeArray.get(0).drawTo(sameSlopeArray.get(sameSlopeArray.size() - 1));
-                  }
-                  
-                  //Reset variable
-                  sameSlopeArray.clear();
-                  newSlopeToCheck = true;
-               }
+                  printResult(array[0], sameSlopeArray, originalArray[i]);
+               
+               //Reset variable
+               sameSlopeArray.clear();
+               sameSlopeArray.add(array[j]);
+               slopeToCheck = originalArray[i].slopeTo(array[j]);
             }
+            
+            if (sameSlopeArray.size() >= CUTOFF_ELEMENT)
+               printResult(array[0], sameSlopeArray, originalArray[i]);
          }
+      }
+   }
+
+   private static void printResult(Point point, List<Point> sameSlopeArray, Point originaPoint)
+   {
+      sameSlopeArray.add(point);
+      // I have 4+ Points with the same slope
+      Collections.sort(sameSlopeArray);
+      
+      // Print result only one time for tuple
+      if (sameSlopeArray.get(0).compareTo(originaPoint) == 0)
+      {
+         for (int k = 0; k < sameSlopeArray.size(); k++)
+         {
+            if (k < sameSlopeArray.size() - 1)
+               StdOut.print(sameSlopeArray.get(k).toString() + " -> ");
+            else
+               StdOut.println(sameSlopeArray.get(k).toString());
+         }
+         sameSlopeArray.get(0).drawTo(sameSlopeArray.get(sameSlopeArray.size() - 1));
       }
    }
 }
