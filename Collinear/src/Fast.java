@@ -37,29 +37,27 @@ public class Fast
          }
          
          originalArray = Arrays.copyOf(array, array.length);
+         double slopeToCheck;
          
          for (int i = 0; i < numberOfPoints; i++)
          {
             Arrays.sort(array, originalArray[i].SLOPE_ORDER);
             
             sameSlopeArray.clear();
-            boolean newSlopeToCheck = true;
-            double slopeToCheck = 0;
+            slopeToCheck = Double.MAX_VALUE;
             
             for (int j = 1; j < numberOfPoints; j++)
             {
-               if (newSlopeToCheck)
+               if (slopeToCheck == Double.MAX_VALUE)
                {
                   slopeToCheck = originalArray[i].slopeTo(array[j]);
                   sameSlopeArray.add(array[j]);
-                  newSlopeToCheck = false;
                   continue;
                }
                   
                if (originalArray[i].slopeTo(array[j]) == slopeToCheck)
                {
                   sameSlopeArray.add(array[j]);
-                  newSlopeToCheck = false;
                   continue;
                }
                

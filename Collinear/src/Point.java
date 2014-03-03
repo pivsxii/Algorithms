@@ -18,13 +18,9 @@ public class Point implements Comparable<Point>
       @Override
       public int compare(Point p1, Point p2)
       {
-         Point origin = new Point(x, y);
-         double p1Slope = origin.slopeTo(p1);
-         double p2Slope = origin.slopeTo(p2);
-         
-         if (p1Slope == p2Slope)
+         if (Point.this.slopeTo(p1) == Point.this.slopeTo(p2))
             return 0;
-         else if (p1Slope > p2Slope)
+         else if (Point.this.slopeTo(p1) > Point.this.slopeTo(p2))
             return 1;
          else
             return -1;
@@ -33,8 +29,6 @@ public class Point implements Comparable<Point>
 
     private final int x;
     private final int y;
-    private final double a = 1.0;
-    private final double positiveZero = (a - a) /  a;   // positive zero ( 0.0)
 
     // create the point (x, y)
     public Point(int x, int y) 
@@ -66,14 +60,13 @@ public class Point implements Comparable<Point>
        
        // Check horizontal line segment
        if (this.y == that.y)
-          return positiveZero;
+          return (double) 0.0/1.0;
 
        // Check vertical line segment
        if (this.x == that.x)
           return Double.POSITIVE_INFINITY;
        
-       double slope = ((double) (that.y - this.y)) / (that.x - this.x); 
-       return slope;
+       return ((double) (that.y - this.y)) / (that.x - this.x); 
     }
 
     // is this point lexicographically smaller than that one?
